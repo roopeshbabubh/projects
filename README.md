@@ -136,7 +136,7 @@ To comment on an existing blog post, you should be either a USER or ADMIN. Basic
 
 ## Removing Content
 
-To remove existing blogs, comments, or users, you should be an ADMIN. Security measures are in place, and basic authentication is required.
+To remove existing blogs, comments you can be USER or ADMIN, but for or users you should be an ADMIN. Security measures are in place, and basic authentication is required.
 
 ### Removing a Blog
 - **DELETE** `http://localhost:8080/api/blogpost/remove-blog/{blogId}`
