@@ -149,7 +149,7 @@ Use it in Postman, where `{blogId}` is the ID of the blog you want to remove.
 Use it in Postman, where `{commentId}` is the ID of the comment you want to remove.
 
 ### Removing a User
-- **POST** `http://localhost:8080/api/logged-users/remove-user`
+- **DELETE** `http://localhost:8080/api/logged-users/remove-user`
 
 ### JSON Format Example
 ```json
