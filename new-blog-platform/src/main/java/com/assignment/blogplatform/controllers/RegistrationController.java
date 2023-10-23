@@ -2,6 +2,7 @@ package com.assignment.blogplatform.controllers;
 
 import com.assignment.blogplatform.entities.User;
 import com.assignment.blogplatform.exceptions.CustomException;
+import com.assignment.blogplatform.models.UserModel;
 import com.assignment.blogplatform.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,9 +24,9 @@ public class RegistrationController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registration(@RequestBody User user) {
-        if (!user.getPassword().isEmpty() && !user.getUserName().isEmpty()) {
-            return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
+    public ResponseEntity<?> registration(@RequestBody UserModel userModel) {
+        if (!userModel.getPassword().isEmpty() && !userModel.getUserName().isEmpty()) {
+            return new ResponseEntity<>(userService.createUser(userModel), HttpStatus.OK);
         } else {
             throw new CustomException(env.getProperty("invalid.data"));
         }

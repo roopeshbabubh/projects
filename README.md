@@ -1,15 +1,24 @@
-# Blog Platform
+# Blog-platform
 
-This README provides instructions on how to use the Blog Platform's API, including various endpoints for user registration, changing passwords, adding roles, publishing blogs, managing tags, commenting on posts, and removing content. Please note that this API includes security measures to ensure proper authorization.
+## Introduction
 
-## Registering a User
+The Blog Platform API provides a set of endpoints for creating, retrieving, updating, and deleting user accounts, blogs, comments, and tags. The API offers a flexible and secure way to manage blog content and user data.
 
-You can use the following endpoint to register a new user. No security measures are applied here, so use it with caution.
+## Authentication
 
-### Endpoint
-- **POST** `http://localhost:8080/api/users/register`
+Authentication is required for various operations on this API. Most endpoints use **Basic Authentication**, where you need to provide a `<username>` and `<password>`. Make sure to include these credentials in the request headers.
 
-### JSON Format Examples
+## Requests
+
+## 1. Register User
+
+- **Description**: This is a POST request designed for the purpose of registering a new user on the platform and, optionally, activating an inactive user. 
+- **Note:** You can only provide roles present in the database, which are **"USER"** and **"ADMIN."**
+- **Endpoint**: [http://localhost:8080/api/users/register](http://localhost:8080/api/users/register)
+- **Method**: POST
+- **Authorization**: No Authentication
+- **Request Body**:
+
 1. Example 1:
 ```json
 {
@@ -40,46 +49,15 @@ You can use the following endpoint to register a new user. No security measures 
 }
 ```
 
-## Changing Password
+## 2. Publish Blog
 
-To change a user's password, you need to be either a USER or ADMIN, and basic authentication is required.
+- **Description**: This is a POST request for publishing a new blog post. 
+- **Note:** You can only provide categories present in the database, which include **'Technology'**, **'Travel'**, **'Food'**, **'Fashion'**, **'Sports'**, **'Science'**, **'Music'**, **'Health'**, **'Books'**, **'Movies'**, **'Fitness'**, **'Gaming'**, **'Art'**, **'History'**, and **'Nature'**.
+- **Endpoint**: [http://localhost:8080/api/blog/publish-blog](http://localhost:8080/api/blog/publish-blog)
+- **Method**: POST
+- **Authorization**: Basic Authentication
+- **Request Body**:
 
-### Endpoint
-- **POST** `http://localhost:8080/api/logged-users/change-password`
-
-### JSON Format Example
-```json
-{
-    "userName": "jhon",
-    "password": "fun123"
-}
-```
-
-Here, the new password is provided in the JSON body, and the old password should be provided in basic authentication.
-
-## Adding Roles to Users
-
-To add roles to existing users, you should be an ADMIN. Basic authentication is required.
-
-### Endpoint
-- **POST** `http://localhost:8080/api/logged-users/add-roles`
-
-### JSON Format Example
-```json
-{
-    "userName": "mary",
-    "roleName": "USER"
-}
-```
-
-## Publishing a Blog
-
-To post a blog, you should be either a USER or ADMIN. Security measures are in place, and basic authentication is required.
-
-### Endpoint
-- **POST** `http://localhost:8080/api/blogpost/publish-blog`
-
-### JSON Format Example
 ```json
 {
     "userName": "mary",
@@ -90,42 +68,101 @@ To post a blog, you should be either a USER or ADMIN. Security measures are in p
             "category": "Technology"
         },
         {
-            "category": "Programming"
+            "category": "Travel"
         }
     ]
 }
 ```
 
-## Adding Tags (Categories) to Blogs
+## 3. Add Tags (Categories) to Blog
 
-To add tags (categories) to existing blogs, you should be either a USER or ADMIN. Basic authentication is required.
+- **Description**: This is a POST request for adding tags to a blog post.
+- **Note:** You can only provide categories present in the database, which include **'Technology'**, **'Travel'**, **'Food'**, **'Fashion'**, **'Sports'**, **'Science'**, **'Music'**, **'Health'**, **'Books'**, **'Movies'**, **'Fitness'**, **'Gaming'**, **'Art'**, **'History'**, and **'Nature'**.
+- **Endpoint**: [http://localhost:8080/api/blog/add-tags](http://localhost:8080/api/blog/add-tags)
+- **Method**: POST
+- **Authorization**: Basic Authentication
+- **Request Body**:
 
-### Endpoint
-- **POST** `http://localhost:8080/api/blogpost/add-tags`
-
-### JSON Format Example
 ```json
 {
-    "blogPostId": 1,
+    "blogId": 1,
     "tags": [
         {
-            "category": "Si-Fi"
+            "category": "Art"
         },
         {
-            "category": "Fantasy"
+            "category": "Technology"
         }
     ]
 }
 ```
 
-## Commenting on a Blog Post
+## 4. Change Password
 
-To comment on an existing blog post, you should be either a USER or ADMIN. Basic authentication is required.
+- **Description**: This is a POST request for changing a user's password.
+- **Endpoint**: [http://localhost:8080/api/logged-users/change-password](http://localhost:8080/api/logged-users/change-password)
+- **Method**: POST
+- **Authorization**: Basic Authentication
+- **Request Body**:
 
-### Endpoint
-- **POST** `http://localhost:8080/api/blogpost/comment-post`
+```json
+{
+    "userName": "jhon",
+    "password": "fun123"
+}
+```
 
-### JSON Format Example
+## 5. Remove Blog
+
+- **Description**: This is a DELETE request to remove a specific blog post.
+- **Endpoint**: [http://localhost:8080/api/blog/remove-blog/{blogId}](http://localhost:8080/api/blog/remove-blog/{blogId})
+- **Method**: DELETE
+- **Authorization**: Basic Authentication
+
+## 6. Remove Comment
+
+- **Description**: This is a DELETE request to remove a specific comment on a blog post.
+- **Endpoint**: [http://localhost:8080/api/blog/remove-comment/{commentId}](http://localhost:8080/api/blog/remove-comment/{commentId})
+- **Method**: DELETE
+- **Authorization**: Basic Authentication
+
+## 7. Remove User
+
+- **Description**: This is a DELETE request to remove a user.
+- **Endpoint**: [http://localhost:8080/api/logged-users/remove-user](http://localhost:8080/api/logged-users/remove-user)
+- **Method**: DELETE
+- **Authorization**: Basic Authentication
+- **Request Body**:
+
+```json
+{
+    "userName": "mary"
+}
+```
+
+## 8. Change User Roles
+
+- **Description**: This is a POST request to change a user's roles.
+- **Endpoint**: [http://localhost:8080/api/logged-users/change-roles](http://localhost:8080/api/logged-users/change-roles)
+- **Method**: POST
+- **Authorization**: Basic Authentication
+- **Request Body**:
+
+```json
+{
+    "userName": "mary",
+    "roleName": "ADMIN"
+}
+```
+
+## 9. Post Comment on Blog
+
+- **Description**: This is a POST request to post a comment on a specific blog post.
+- **Endpoint**: [http://localhost:8080/api/blog/post-comment](http://localhost:8080/api/blog/post-comment)
+- **Method**: POST
+- **Authorization**: Basic Authentication
+- **Request Body**:
+
 ```json
 {
     "blogId": 1,
@@ -134,28 +171,56 @@ To comment on an existing blog post, you should be either a USER or ADMIN. Basic
 }
 ```
 
-## Removing Content
+## 10. Retrieve All Blogs
 
-To remove existing blogs, comments you can be USER or ADMIN, but for or users you should be an ADMIN. Security measures are in place, and basic authentication is required.
+- **Description**: This is a GET request to retrieve all blog posts for a user.
+- **Endpoint**: [http://localhost:8080/api/blog/retrieve-all-blogs/mary](http://localhost:8080/api/blog/retrieve-all-blogs/mary)
+- **Method**: GET
+- **Authorization**: Basic Authentication
 
-### Removing a Blog
-- **DELETE** `http://localhost:8080/api/blogpost/remove-blog/{blogId}`
+## 11. Get Comments Counts on Each Blog
 
-Use it in Postman, where `{blogId}` is the ID of the blog you want to remove.
+- **Description**: This is a GET request to get the comment counts for each blog.
+- **Endpoint**: [http://localhost:8080/api/blog/get-comments-counts-on-each-blogs](http://localhost:8080/api/blog/get-comments-counts-on-each-blogs)
+- **Method**: GET
+- **Authorization**: Basic Authentication
 
-### Removing a Comment
-- **DELETE** `http://localhost:8080/api/blogpost/remove-comment/{commentId}`
+## 12. Get Blog
 
-Use it in Postman, where `{commentId}` is the ID of the comment you want to remove.
+- **Description**: This is a GET request to retrieve blog posts that match certain criteria.
+- **Endpoint**: [http://localhost:8080/api/blog/get-blogs](http://localhost:8080/api/blog/get-blogs)
+- **Method**: GET
+- **Authorization**: Basic Authentication
+- **Request Body**:
 
-### Removing a User
-- **DELETE** `http://localhost:8080/api/logged-users/remove-user`
-
-### JSON Format Example
 ```json
 {
-    "userName": "mary"
+    "title": "Sample Blog Post",
+    "content": "This is the content of the blog post.",
+    "category": "Technology"
 }
 ```
 
-Remember to replace `<username>` and `<password>` with your actual authentication details when using the API.
+## 13. Get Tags and it's use Counts
+
+- **Description**: This is a GET request to retrieve tags and their counts.
+- **Endpoint**: [http://localhost:8080/api/blog/tags-and-count](http://localhost:8080/api/blog/tags-and-count)
+- **Method**: GET
+- **Authorization**: Basic Authentication
+
+## Response Codes
+
+The API returns standard HTTP response codes to indicate the success or failure of a request. Common response codes include:
+
+- 200 OK: The request was successful.
+- 201 Created: The resource was successfully created.
+- 204 No Content: The request was successful, and there is no additional information to send back.
+- 400 Bad Request: The request was invalid or missing required parameters.
+- 401 Unauthorized: The request requires user authentication or the provided credentials are invalid.
+- 403 Forbidden: The authenticated user does not have access to the requested resource.
+- 404 Not Found: The requested resource does not exist.
+- 500 Internal Server Error: An error occurred on the server.
+
+## Conclusion
+
+The Blog Platform API provides powerful features for managing user accounts, blogs, comments, and tags. With proper authentication and authorization, you can effectively use this API to create, retrieve, update, and delete data. Use the provided Postman Collection to test the API endpoints and explore its capabilities.
