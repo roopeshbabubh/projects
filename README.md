@@ -1,4 +1,4 @@
-# Blog-platform
+# New-Blog-platform
 
 ## Introduction
 
